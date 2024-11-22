@@ -1,0 +1,52 @@
+# .NET build files
+bin/
+obj/
+
+# ASP.NET core settings
+appsettings.Development.json
+appsettings.Production.json
+
+# User-specific files
+.vscode/
+.idea/
+
+# Node modules
+node_modules/
+
+# Vite build output
+dist/
+
+# npm log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vue 3 / Vite environment files
+.env
+.env.local
+.env.development
+.env.production
+
+# Local database files
+*.sqlite
+*.db
+
+# Docker
+docker-compose.override.yml
+Dockerfile
+
+# Log files
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDEs
+/.idea
+/.vscode
+
+# Windows installer files
+*.cab
+*.msi
+*.msp

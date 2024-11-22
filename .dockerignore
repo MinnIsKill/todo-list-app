@@ -1,0 +1,12 @@
+# Ignore node_modules
+**/node_modules
+
+# Ignore .NET build artifacts
+**/bin
+**/obj
+
+# Ignore other irrelevant files
+.dockerignore
+.git
+.gitignore
+.vscode
