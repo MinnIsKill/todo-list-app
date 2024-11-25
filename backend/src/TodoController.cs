@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using TodoApi.Models;
+using TodoApi.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace TodoApi.Controllers
 {
@@ -9,24 +11,28 @@ namespace TodoApi.Controllers
     [ApiController]
     public class TodoController : ControllerBase
     {
-        private static readonly List<TodoItem> TodoItems = new List<TodoItem>();
+        private readonly TodoItemRepository _repository;
+        private readonly ILogger<TodoController> _logger;
+
+        public TodoController(TodoItemRepository repository, ILogger<TodoController> logger)
+        {
+            _repository = repository;
+            _logger = logger;
+        }
 
         // GET: api/todo
         [HttpGet]
-        public ActionResult<IEnumerable<TodoItem>> GetAll([FromQuery] int? state)
+        public async Task<ActionResult<IEnumerable<TodoItem>>> GetAll([FromQuery] int? state)
         {
-            var filteredTodos = state.HasValue
-                ? TodoItems.Where(t => t.State == state.Value).ToList()
-                : TodoItems;
-
-            return Ok(filteredTodos);
+            var todos = await _repository.GetAllTodoItemsAsync(state);
+            return Ok(todos);
         }
 
         // GET: api/todo/{id}
         [HttpGet("{id}")]
-        public ActionResult<TodoItem> GetById(Guid id)
+        public async Task<ActionResult<TodoItem>> GetById(Guid id)
         {
-            var todo = TodoItems.FirstOrDefault(t => t.Id == id);
+            var todo = await _repository.GetTodoItemByIdAsync(id);
             if (todo == null)
                 return NotFound(new { isError = true, error = new { code = "404", message = "Todo item not found" } });
 
@@ -34,37 +40,56 @@ namespace TodoApi.Controllers
         }
 
         // POST: api/todo
-        [HttpPost]
-        public ActionResult<TodoItem> Create([FromBody] TodoItem todo)
+        public async Task<ActionResult<TodoItem>> Create([FromBody] TodoItem todo)
         {
-            TodoItems.Add(todo);
-            return CreatedAtAction(nameof(GetById), new { id = todo.Id }, todo);
+            if (todo == null)
+            {
+                _logger.LogWarning("Received a null TodoItem.");
+                return BadRequest("Todo item cannot be null.");
+            }
+
+            _logger.LogInformation("Received a request to add TodoItem with Title: {Title}", todo.Title);
+
+            try
+            {
+                await _repository.AddTodoItemAsync(todo);
+                _logger.LogInformation("TodoItem with ID: {Id} added successfully.", todo.Id);
+                return CreatedAtAction(nameof(GetById), new { id = todo.Id }, todo);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while adding TodoItem.");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         // PUT: api/todo/{id}
         [HttpPut("{id}")]
-        public ActionResult Update(Guid id, [FromBody] TodoItem todo)
+        public async Task<ActionResult> Update(Guid id, [FromBody] TodoItem todo)
         {
-            var existingTodo = TodoItems.FirstOrDefault(t => t.Id == id);
+            var existingTodo = await _repository.GetTodoItemByIdAsync(id);
             if (existingTodo == null)
                 return NotFound(new { isError = true, error = new { code = "404", message = "Todo item not found" } });
 
-            existingTodo.Title = todo.Title;
-            existingTodo.Content = todo.Content;
-            existingTodo.State = todo.State;
-
+            await _repository.UpdateTodoItemAsync(todo);
             return NoContent();
         }
 
         // DELETE: api/todo/{id}
         [HttpDelete("{id}")]
-        public ActionResult Delete(Guid id)
+        public async Task<ActionResult> Delete(Guid id)
         {
-            var todo = TodoItems.FirstOrDefault(t => t.Id == id);
-            if (todo == null)
-                return NotFound(new { isError = true, error = new { code = "404", message = "Todo item not found" } });
+            _logger.LogInformation("Received a request to delete TodoItem with ID: {id}", id);
 
-            TodoItems.Remove(todo);
+            var todo = await _repository.GetTodoItemByIdAsync(id);
+            if (todo == null)
+            {
+                _logger.LogInformation("Todo item not found.");
+                return NotFound(new { isError = true, error = new { code = "404", message = "Todo item not found" } });
+            }
+
+            await _repository.DeleteTodoItemAsync(id);
+            _logger.LogInformation("Todo item deleted successfully.");
             return NoContent();
         }
     }

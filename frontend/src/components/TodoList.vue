@@ -15,7 +15,7 @@
         <td>{{ task.title }}</td>
         <td>{{ task.content }}</td>
         <td>
-          <select v-model="task.state">
+          <select v-model="task.state" @change="updateStatus(task)">
             <option value="1">Open</option>
             <option value="2">In Progress</option>
             <option value="3">Finished</option>
