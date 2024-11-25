@@ -1,41 +1,55 @@
 import { createStore } from 'vuex';
 
-const store = createStore({
-  state() {
-    return {
-      tasks: [], // Initialize tasks as an empty array
-    };
+export const store = createStore({
+  state: {
+    todos: [],
   },
   mutations: {
-    setTasks(state, tasks) {
-      state.tasks = tasks;
+    setTodos(state, todos) {
+      state.todos = todos;
     },
-    deleteTask(state, taskId) {
-      state.tasks = state.tasks.filter(task => task.id !== taskId);
+    addTodo(state, todo) {
+      state.todos.push(todo);
     },
-    updateTaskState(state, { taskId, newState }) {
-      const task = state.tasks.find(task => task.id === taskId);
-      if (task) {
-        task.state = newState;
+    updateTodo(state, updatedTodo) {
+      const index = state.todos.findIndex(todo => todo.id === updatedTodo.id);
+      if (index !== -1) {
+        state.todos[index] = updatedTodo;
       }
     },
+    deleteTodo(state, id) {
+      state.todos = state.todos.filter(todo => todo.id !== id);
+    }
   },
   actions: {
-    fetchTasks({ commit }) {
-      // Simulating an API call with mock data
-      const tasks = [
-        { id: '1', title: 'First task', content: 'This is the first task.', state: '1' },
-        { id: '2', title: 'Second task', content: 'This is the second task.', state: '2' },
-      ];
-      commit('setTasks', tasks);
+    async fetchTodos({ commit }) {
+      const response = await fetch('/api/todo');
+      const data = await response.json();
+      commit('setTodos', data);
     },
-    deleteTask({ commit }, taskId) {
-      commit('deleteTask', taskId);
+    async createTodo({ commit }, todo) {
+      const response = await fetch('/api/todo', {
+        method: 'POST',
+        body: JSON.stringify(todo),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const newTodo = await response.json();
+      commit('addTodo', newTodo);
     },
-    updateTaskState({ commit }, payload) {
-      commit('updateTaskState', payload);
+    async updateTodoStatus({ commit }, { id, state }) {
+      const response = await fetch(`/api/todo/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify({ state }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const updatedTodo = await response.json();
+      commit('updateTodo', updatedTodo);
     },
-  },
+    async deleteTodo({ commit }, id) {
+      await fetch(`/api/todo/${id}`, { method: 'DELETE' });
+      commit('deleteTodo', id);
+    }
+  }
 });
 
 export default store;

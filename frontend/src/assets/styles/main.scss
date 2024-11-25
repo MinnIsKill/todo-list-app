@@ -1,6 +1,12 @@
 @use 'sass:color';
 
-$primary-color: #3498db;
+$lightest-color: #F2F2F2;
+$light-color: #89CAD9;
+$middle-color: #4ECBD9;
+$deep-color: #3391A6;
+$deepest-color: #26798C;
+$text-color-dark: #333;
+$text-color-light: #b1d5dd;
 $font-stack: "Roboto", sans-serif;
 
 
@@ -16,53 +22,180 @@ $font-stack: "Roboto", sans-serif;
 }
 
 body {
-  font-family: $font-stack;
-  background-color: #f8f9fa;
-  color: #333;
-  margin: 0;
-  padding: 0;
+    font-family: $font-stack;
+    background-color: $light-color;
+    color: $text-color-dark;
+    margin: 0;
+    padding: 0;
 }
 
 button {
-  background-color: $primary-color;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 12px;
-  cursor: pointer;
+    background-color: $middle-color;
+    color: $text-color-light;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
 
-  &:hover {
-    background-color: color.adjust($primary-color, $lightness: -10%);
-  }
+    &:hover {
+        background-color: color.adjust($middle-color, $lightness: -10%);
+    }
 }
 
+/* TABLE */
 table {
     width: 100%;
+    table-layout: fixed;
     border-collapse: collapse;
-  }
+    /* maybe also add some styles for responsiveness if I find the time? */
+}
+
+.fixed-width {
+    /*! for actual width changing refer to TodoList.vue directly */
+    word-wrap: break-word; /* This will allow text to wrap within the cell if it's too long */
+}
   
-  th, td {
+th, td {
     padding: 10px;
-    border: 1px solid #ddd;
-  }
-  
-  th {
+    border: 2px solid $deep-color;
+}
+
+th {
+    background-color: $deepest-color;
+    color: $text-color-light;
     text-align: left;
-    background-color: #f4f4f4;
-  }
+}
+
+tr:nth-child(odd) {
+    background-color: color.adjust($lightest-color, $lightness: -10%);
+}
+tr:nth-child(even) {
+    background-color: color.adjust($lightest-color, $lightness: -20%);
+}
   
-  button {
+button {
     padding: 5px 10px;
-    background-color: #f44336;
-    color: white;
+    background-color: $deepest-color;
+    color: $text-color-light;
     border: none;
     cursor: pointer;
-  }
+}
   
-  button:hover {
-    background-color: #d32f2f;
-  }
+button:hover {
+    background-color: color.adjust($deepest-color, $lightness: +15%);
+    color: $text-color-dark;
+}
+
+/* 'ADD TASK' BUTTON */
+.main-button {
+    display: block;  /* Makes the button a block element */
+    margin: 20px auto;  /* Centers the button horizontally */
+    padding: 10px 20px;  /* Increases the size of the button */
+    font-size: 16px;  /* Makes the text inside the button larger */
+    background-color: $deepest-color;
+    color: $text-color-light;
+    border: none;  /* Remove default border */
+    border-radius: 5px;  /* Optional: Rounded corners */
+    cursor: pointer;  /* Pointer cursor on hover */
+    transition: background-color 0.3s;  /* Optional: Smooth background change on hover */
+}
   
-  select {
+.main-button:hover {
+    background-color: color.adjust($deepest-color, $lightness: +15%);
+    color: $text-color-dark;
+}
+  
+select {
     padding: 5px;
-  }
+}
+
+/* TASK FORM */
+.task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+  
+.form-input, .form-textarea, .form-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid $light-color;
+    border-radius: 4px;
+    background-color: $lightest-color;
+    font-family: $font-stack;
+    font-size: 14px;
+    color: $text-color-dark;
+  
+    &:focus {
+        outline: none;
+        border-color: $deep-color;
+        box-shadow: 0 0 5px $deep-color;
+    }
+}
+  
+.form-textarea {
+    resize: none; // Disable resizing for cleaner design
+    height: 100px;
+}
+  
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-select {
+    text-align: center;
+}
+  
+.submit-button, .cancel-button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+  
+.submit-button {
+    background-color: $middle-color;
+    margin: 0 auto;
+    color: $text-color-dark;
+  
+    &:hover {
+        background-color: color.adjust($middle-color, $lightness: -10%);
+        color: $text-color-dark;
+    }
+}
+  
+.cancel-button {
+    background-color: $deepest-color;
+    color: $text-color-light;
+    margin: 0 auto;
+  
+    &:hover {
+        background-color: color.adjust($deepest-color, $lightness: -5%);
+        color: $text-color-light;
+    }
+}
+
+/* MODAL */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background-color: color.adjust($deepest-color, $lightness: -10%);
+    color: $text-color-light;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+    position: relative;
+}

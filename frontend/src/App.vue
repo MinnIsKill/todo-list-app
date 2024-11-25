@@ -1,15 +1,16 @@
 <template>
   <div id="app">
-    <TaskList />
+    <!-- Main App UI for managing tasks -->
+    <TodoApp />
   </div>
 </template>
 
 <script>
-import TaskList from './components/TaskList.vue';
+import TodoApp from './components/TodoApp.vue';
 
 export default {
   components: {
-    TaskList,
+    TodoApp,
   },
 };
 </script>
