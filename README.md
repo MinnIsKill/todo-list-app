@@ -93,47 +93,9 @@ It is possible that you may encounter an issue with downloading the required .en
 
 ## Folder Structure
 
-**frontend:** Contains the Vue.js application.
-**backend:** Contains the ASP.NET backend project.
+**frontend:** Contains the Vue.js application  
+**backend:** Contains the ASP.NET backend project  
 **backend/database:** Contains SQLite database and data files.
-
-Basic project tree structure (only important files):
-.
-├── backend
-│   ├── appsettings.json
-│   ├── backend.csproj
-│   ├── database
-│   │   ├── DbHelper.cs
-│   │   ├── schema.sql
-│   │   └── todoapp.db
-│   ├── Dockerfile
-│   ├── Program.cs
-│   ├── Properties
-│   │   └── launchSettings.json
-│   └── src
-│   ├── TodoController.cs
-│   ├── TodoItem.cs
-│   └── TodoItemRepository.cs
-├── docker-compose.yml
-├── frontend
-│   ├── Dockerfile
-│   ├── index.html
-│   ├── src
-│   │   ├── App.vue
-│   │   ├── assets
-│   │   │   └── styles
-│   │   │   └── main.scss
-│   │   ├── components
-│   │   │   ├── AddTaskForm.vue
-│   │   │   ├── Modal.vue
-│   │   │   ├── TaskItem.vue
-│   │   │   ├── TodoApp.vue
-│   │   │   └── TodoList.vue
-│   │   ├── main.js
-│   │   └── store
-│   │   └── index.js
-│   └── vite.config.js
-└── README.md
 
 ---
 
