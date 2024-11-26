@@ -34,8 +34,9 @@ namespace TodoApi.Controllers
         {
             var todo = await _repository.GetTodoItemByIdAsync(id);
             if (todo == null)
-                return NotFound(new { isError = true, error = new { code = "404", message = "Todo item not found" } });
-
+            {
+                return NotFound(new { isError = "true", error = new { code = "404", message = "Todo item not found" } });
+            }
             return Ok(todo);
         }
 
@@ -46,7 +47,7 @@ namespace TodoApi.Controllers
             if (todo == null)
             {
                 _logger.LogWarning("Received a null TodoItem.");
-                return BadRequest("Todo item cannot be null.");
+                return BadRequest(new { isError = "true", error = new { code = "400", message = "Todo item cannot be null" } });
             }
 
             _logger.LogInformation("Received a request to add TodoItem with Title: {Title}", todo.Title);
@@ -60,7 +61,7 @@ namespace TodoApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while adding TodoItem.");
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, new { isError = "true", error = new { code = "500", message = "Internal server error" } });
             }
         }
 
@@ -74,7 +75,7 @@ namespace TodoApi.Controllers
             if (existingTodo == null)
             {
                 _logger.LogError("Error occurred while adding TodoItem");
-                return NotFound(new { isError = true, error = new { code = "404", message = "Todo item not found" } });
+                return NotFound(new { isError = "true", error = new { code = "404", message = "Todo item not found" } });
             }
 
             await _repository.UpdateTodoItemAsync(todo);
@@ -91,7 +92,7 @@ namespace TodoApi.Controllers
             if (todo == null)
             {
                 _logger.LogInformation("Todo item not found.");
-                return NotFound(new { isError = true, error = new { code = "404", message = "Todo item not found" } });
+                return NotFound(new { isError = "true", error = new { code = "404", message = "Todo item not found" } });
             }
 
             await _repository.DeleteTodoItemAsync(id);
