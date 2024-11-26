@@ -26,7 +26,6 @@ namespace TodoApi.Repositories
             {
                 await connection.OpenAsync();
 
-                // Print out the actual connection string (path)
                 Console.WriteLine($"Using SQLite database at: {_connectionString}");
 
                 var createTableQuery = @"
@@ -38,7 +37,6 @@ namespace TodoApi.Repositories
                     );";
                 await connection.ExecuteAsync(createTableQuery);
 
-                // Check if the table was created or exists
                 var checkTableQuery = "SELECT name FROM sqlite_master WHERE type='table' AND name='TodoItems';";
                 var tableExists = await connection.QueryFirstOrDefaultAsync<string>(checkTableQuery);
 
@@ -68,7 +66,6 @@ namespace TodoApi.Repositories
 
                 var todoItems = await connection.QueryAsync<TodoItem>(query, new { State = state });
 
-                // Log the fetched data
                 foreach (var item in todoItems)
                 {
                     Console.WriteLine($"Fetched TodoItem: {item.Title}, State: {item.State}");
@@ -84,7 +81,6 @@ namespace TodoApi.Repositories
             using (var connection = new SqliteConnection(_connectionString))
             {
                 await connection.OpenAsync();
-                // Explicitly convert `id` to string if needed
                 return await connection.QueryFirstOrDefaultAsync<TodoItem>(
                     "SELECT * FROM TodoItems WHERE Id = @Id",
                     new { Id = id.ToString() }

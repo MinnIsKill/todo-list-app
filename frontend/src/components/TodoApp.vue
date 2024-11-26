@@ -1,14 +1,15 @@
 <!-- TodoApp.vue - main app file -->
 <template>
     <div>
+        <!-- 'Add Task' button-->
         <button @click="openAddTaskForm" class="main-button">Add Task</button>
         
-        <!-- Modal to add task -->
+        <!-- modal -->
         <Modal ref="modal">
             <AddTaskForm @add-task="addTask" @close-form="closeAddTaskForm" />
         </Modal>
         
-        <!-- Display Todo List -->
+        <!-- Todo List -->
         <TodoList :tasks="todos" @delete-task="deleteTask" @update-task-status="updateTaskStatus" />
     </div>
 </template>

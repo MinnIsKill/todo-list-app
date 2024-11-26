@@ -3,7 +3,7 @@
 <template>
     <div v-if="isVisible" class="modal-overlay" @click.self="closeModal">
       <div class="modal-content">
-        <slot></slot> <!-- This allows passing content to the modal, such as the AddTaskForm -->
+        <slot></slot>
       </div>
     </div>
   </template>

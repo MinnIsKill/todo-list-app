@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    env_file:
+      - ./frontend/.env.docker # Docker requires a different .env variable, saved in .env.docker
+    ports:
+      - "5173:80" # Expose port 5173 locally, mapped to 80 in the container
+    networks:
+      - todo-network
+
+  backend:
+    build:
+      context: ./backend # Backend build context
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend/database:/app/database
+    ports:
+      - "5029:8080" # Expose port 5029 locally, mapped to 8080 inside container
+    networks:
+      - todo-network
+
+networks:
+  todo-network:
+    driver: bridge

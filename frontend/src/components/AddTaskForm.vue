@@ -54,8 +54,8 @@
       closeForm() {
         this.$emit('close-form');
       },
-      generateId() {
-        return crypto.randomUUID(); // Generates a UUIDv4
+      generateId() { // UUID generator
+        return crypto.randomUUID();
       },
     },
   };

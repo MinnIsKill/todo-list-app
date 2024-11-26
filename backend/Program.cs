@@ -16,7 +16,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", builder =>
     {
-        builder.WithOrigins("http://localhost:5173")  // Frontend's URL
+        builder.WithOrigins("http://localhost:5173")
                .AllowAnyMethod()
                .AllowAnyHeader();
     });
@@ -47,7 +47,7 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var repository = services.GetRequiredService<TodoItemRepository>();
-    await repository.InitializeDatabaseAsync();  // Ensure database is initialized
+    await repository.InitializeDatabaseAsync();
 }
 
 // Configure HTTP request pipeline
@@ -59,7 +59,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-app.UseCors("AllowSpecificOrigin");  // Apply CORS policy here
+app.UseCors("AllowSpecificOrigin");  // Apply CORS policy
 
 app.MapControllers();
 

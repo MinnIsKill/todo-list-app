@@ -36,6 +36,25 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "DOTNET_USE_POLLING_FILE_WATCHER": "1",
+        "ASPNETCORE_URLS": "http://+:5029",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "httpPort": 5029
+    },
+    "backend": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:5029;http://localhost:5028",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   }
 }
