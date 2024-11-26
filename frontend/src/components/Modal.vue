@@ -2,26 +2,26 @@
 
 <template>
     <div v-if="isVisible" class="modal-overlay" @click.self="closeModal">
-      <div class="modal-content">
-        <slot></slot>
-      </div>
+        <div class="modal-content">
+            <slot></slot>
+        </div>
     </div>
-  </template>
+</template>
   
-  <script>
-  export default {
-    data() {
-      return {
-        isVisible: false,
-      };
-    },
-    methods: {
-      openModal() {
-        this.isVisible = true;
-      },
-      closeModal() {
-        this.isVisible = false;
-      },
-    },
-  };
-  </script>
+<script>
+    export default {
+        data() {
+            return {
+                isVisible: false,
+            };
+        },
+        methods: {
+            openModal() {
+                this.isVisible = true;
+            },
+            closeModal() {
+                this.isVisible = false;
+            },
+        },
+    };
+</script>
