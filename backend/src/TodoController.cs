@@ -40,6 +40,7 @@ namespace TodoApi.Controllers
         }
 
         // POST: api/todo
+        [HttpPost]
         public async Task<ActionResult<TodoItem>> Create([FromBody] TodoItem todo)
         {
             if (todo == null)
@@ -67,12 +68,17 @@ namespace TodoApi.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(Guid id, [FromBody] TodoItem todo)
         {
+            _logger.LogInformation("Received a request to update TodoItem with Title: {Title}", todo.Title);
+
             var existingTodo = await _repository.GetTodoItemByIdAsync(id);
             if (existingTodo == null)
+            {
+                _logger.LogError("Error occurred while adding TodoItem");
                 return NotFound(new { isError = true, error = new { code = "404", message = "Todo item not found" } });
+            }
 
             await _repository.UpdateTodoItemAsync(todo);
-            return NoContent();
+            return Ok(todo);
         }
 
         // DELETE: api/todo/{id}

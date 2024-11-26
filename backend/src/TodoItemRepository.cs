@@ -118,7 +118,7 @@ namespace TodoApi.Repositories
                 string query = "UPDATE TodoItems SET Title = @Title, Content = @Content, State = @State WHERE Id = @Id";
                 await connection.ExecuteAsync(query, item);
 
-                _logger.LogInformation("TodoItem with ID: {id} deleted successfully.", item.Id);
+                _logger.LogInformation("TodoItem with ID: {id} updated successfully.", item.Id);
             }
         }
 

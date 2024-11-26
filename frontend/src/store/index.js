@@ -34,7 +34,7 @@ export const store = createStore({
         async createTodo({ commit }, todo) {
             try {
                 const apiUrl = import.meta.env.VITE_API_URL; // Fetch the URL from environment variables
-                console.log('Sending request to add Todo:', todo);  // Debugging: Log the todo item.
+                console.log('Sending request to add Todo:', todo);
                 const response = await fetch(`${apiUrl}/api/todo`, {
                     method: 'POST',
                     body: JSON.stringify(todo),
@@ -48,7 +48,7 @@ export const store = createStore({
                 const newTodo = await response.json();
                 commit('addTodo', newTodo);
         
-                console.log('Todo added successfully:', newTodo);  // Debugging: Log the added todo.
+                console.log('Todo added successfully:', newTodo);
             } catch (error) {
                 console.error('Error adding todo:', error);
             }
@@ -57,7 +57,7 @@ export const store = createStore({
             try {
                 const apiUrl = import.meta.env.VITE_API_URL; // Fetch the URL from environment variables
                 console.log('Sending request to update Todo:', todo);
-                const response = await fetch(`${apiUrl}/api/todo`, {
+                const response = await fetch(`${apiUrl}/api/todo/${todo.id}`, {
                     method: 'PUT',
                     body: JSON.stringify(todo),
                     headers: { 'Content-Type': 'application/json' },
