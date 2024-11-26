@@ -32,18 +32,6 @@ Make sure you have the following installed before running the application:
 
 ---
 
-## Running with Docker (Recommended)
-
-1.  **Build and start the application using Docker Compose**
-    Make sure you are in the root of the project (where docker-compose.yml is located), then run:
-
-    ```bash
-    docker-compose up
-    ```
-
-    The frontend should now be available at: http://localhost:5173/
-    The backend API should be available at: http://localhost:8080/api/todo
-
 ## .env variables
 
 It is possible that you may encounter an issue with downloading the required .env variables, as Git tries to exclude them by default. Check if you have them in your **/backend** directory, and if not, create them:
@@ -63,6 +51,18 @@ It is possible that you may encounter an issue with downloading the required .en
    ```bash
    VITE_API_URL=http://backend:8080
    ```
+
+## Running with Docker (Recommended)
+
+1.  **Build and start the application using Docker Compose**
+    Make sure you are in the root of the project (where docker-compose.yml is located), then run:
+
+    ```bash
+    docker-compose up
+    ```
+
+    The frontend should now be available at: http://localhost:5173/
+    The backend API should be available at: http://localhost:8080/api/todo
 
 ## Running Locally (Without Docker)
 
@@ -90,3 +90,54 @@ It is possible that you may encounter an issue with downloading the required .en
     The backend API should be available at: http://localhost:5029/api/todo
 
 ---
+
+## Folder Structure
+
+**frontend:** Contains the Vue.js application.
+**backend:** Contains the ASP.NET backend project.
+**backend/database:** Contains SQLite database and data files.
+
+Basic project tree structure (only important files):
+.
+├── backend
+│   ├── appsettings.json
+│   ├── backend.csproj
+│   ├── database
+│   │   ├── DbHelper.cs
+│   │   ├── schema.sql
+│   │   └── todoapp.db
+│   ├── Dockerfile
+│   ├── Program.cs
+│   ├── Properties
+│   │   └── launchSettings.json
+│   └── src
+│   ├── TodoController.cs
+│   ├── TodoItem.cs
+│   └── TodoItemRepository.cs
+├── docker-compose.yml
+├── frontend
+│   ├── Dockerfile
+│   ├── index.html
+│   ├── src
+│   │   ├── App.vue
+│   │   ├── assets
+│   │   │   └── styles
+│   │   │   └── main.scss
+│   │   ├── components
+│   │   │   ├── AddTaskForm.vue
+│   │   │   ├── Modal.vue
+│   │   │   ├── TaskItem.vue
+│   │   │   ├── TodoApp.vue
+│   │   │   └── TodoList.vue
+│   │   ├── main.js
+│   │   └── store
+│   │   └── index.js
+│   └── vite.config.js
+└── README.md
+
+---
+
+## Troubleshooting
+
+- **CORS Issues:** If you're running into CORS issues, make sure the backend is properly configured to accept requests from the frontend. You can verify by checking the CORS settings in the backend code.
+- **Database Issues:** If the SQLite database doesn't exist, the backend will attempt to create it when the application starts. Ensure that the backend has proper permissions to write to the database folder.
