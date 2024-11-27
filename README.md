@@ -61,7 +61,7 @@ It is possible that you may encounter an issue with downloading the required .en
     docker-compose up
     ```
 
-    The frontend should now be available at: http://localhost:5173/
+    The frontend should now be available at: http://localhost:5173/  
     The backend API should be available at: http://localhost:8080/api/todo
 
 ## Running Locally (Without Docker)
@@ -86,7 +86,7 @@ It is possible that you may encounter an issue with downloading the required .en
     npm run dev
     ```
 
-    The frontend should now be available at: http://localhost:5173/
+    The frontend should now be available at: http://localhost:5173/  
     The backend API should be available at: http://localhost:5029/api/todo
 
 ---
