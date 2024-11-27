@@ -30,6 +30,10 @@ Make sure you have the following installed before running the application:
 - [Docker](https://www.docker.com/get-started) (optional, for containerized development)
 - [SQLite](https://www.sqlite.org/) (installed by the backend for local development)
 
+Required for running the application locally (without Docker)
+
+- [.NET 9](https://dotnet.microsoft.com/en-us/)
+
 ---
 
 ## .env variables
