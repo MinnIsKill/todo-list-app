@@ -23,6 +23,16 @@ services:
     networks:
       - todo-network
 
+  startup-message:
+    image: alpine
+    depends_on:
+      - frontend
+      - backend
+    command: >
+      sh -c "echo 'frontend available on: http://localhost:5173' && sleep 5"
+    networks:
+      - todo-network
+
 networks:
   todo-network:
     driver: bridge

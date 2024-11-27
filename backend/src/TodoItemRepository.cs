@@ -91,7 +91,7 @@ namespace TodoApi.Repositories
         // Method to add a Todo item
         public async Task AddTodoItemAsync(TodoItem item)
         {
-            _logger.LogInformation("Attempting to add a new TodoItem with ID: {Id}", item.Id);
+            //_logger.LogInformation("Attempting to add a new TodoItem with ID: {Id}", item.Id);
 
             using (var connection = new SqliteConnection(_connectionString))
             {
@@ -99,14 +99,14 @@ namespace TodoApi.Repositories
                 string query = "INSERT INTO TodoItems (Id, Title, Content, State) VALUES (@Id, @Title, @Content, @State)";
                 await connection.ExecuteAsync(query, item);
 
-                _logger.LogInformation("TodoItem with ID: {Id} added successfully.", item.Id);
+                //_logger.LogInformation("TodoItem with ID: {Id} added successfully.", item.Id);
             }
         }
 
         // Method to update a Todo item
         public async Task UpdateTodoItemAsync(TodoItem item)
         {
-            _logger.LogInformation("Attempting to update a TodoItem with ID: {id}", item.Id);
+            //_logger.LogInformation("Attempting to update a TodoItem with ID: {id}", item.Id);
 
             using (var connection = new SqliteConnection(_connectionString))
             {
@@ -114,14 +114,14 @@ namespace TodoApi.Repositories
                 string query = "UPDATE TodoItems SET Title = @Title, Content = @Content, State = @State WHERE Id = @Id";
                 await connection.ExecuteAsync(query, item);
 
-                _logger.LogInformation("TodoItem with ID: {id} updated successfully.", item.Id);
+                //_logger.LogInformation("TodoItem with ID: {id} updated successfully.", item.Id);
             }
         }
 
         // Method to delete a Todo item
         public async Task DeleteTodoItemAsync(Guid id)
         {
-            _logger.LogInformation("Attempting to delete a TodoItem with ID: {id}", id);
+            //_logger.LogInformation("Attempting to delete a TodoItem with ID: {id}", id);
 
             using (var connection = new SqliteConnection(_connectionString))
             {
@@ -129,7 +129,7 @@ namespace TodoApi.Repositories
                 string query = "DELETE FROM TodoItems WHERE Id = @Id";
                 await connection.ExecuteAsync(query, new { Id = id.ToString() });
 
-                _logger.LogInformation("TodoItem with ID: {id} deleted successfully.", id);
+                //_logger.LogInformation("TodoItem with ID: {id} deleted successfully.", id);
             }
         }
     }
